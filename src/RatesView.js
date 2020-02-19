@@ -7,9 +7,12 @@ class RatesView extends React.Component {
     this.state = {
       isLoaded: false,
       error: null,
-      rates: [],
-      base: '',
-      date: ''
+      eurRates: [],
+      eurBase: '',
+      eurDate: '',
+      usdRates: [],
+      usdBase: '',
+      usdDate: ''
     }
   }
 
@@ -21,9 +24,28 @@ class RatesView extends React.Component {
         result => {
           this.setState({
             isLoaded: true,
-            rates: result.rates,
-            base: result.base,
-            date: result.date
+            eurRates: result.rates,
+            eurBase: result.base,
+            eurDate: result.date
+          })
+        },
+        error => {
+          this.setState({
+            isLoaded: true,
+            error: error
+          })
+        }
+      )
+    window
+      .fetch('https://api.exchangeratesapi.io/latest?base=USD')
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            isLoaded: true,
+            usdRates: result.rates,
+            usdBase: result.base,
+            usdDate: result.date
           })
         },
         error => {
@@ -43,12 +65,15 @@ class RatesView extends React.Component {
     } else {
       return (
         <div>
-          <h1>
-            {this.state.date}の対{this.state.base}
-          </h1>
-          <p>
-            <b>1ユーロ = {this.state.rates.JPY} 円</b>
-          </p>
+          <h1>為替レート</h1>
+          <h2>
+            {this.state.eurDate} {this.state.eurBase}-日本円
+          </h2>
+          <p>1ユーロ = {this.state.eurRates.JPY}円</p>
+          <h2>
+            {this.state.usdDate} {this.state.usdBase}-日本円
+          </h2>
+          <p>1ドル = {this.state.usdRates.JPY}円</p>
         </div>
       )
     }
