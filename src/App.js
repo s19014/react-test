@@ -46,7 +46,7 @@ class MonsterView extends React.Component {
           <h1>
             {this.state.date}の対{this.state.base}
           </h1>
-          <p>1ユーロ = {this.state.rates.JPY} 円</p>
+          <p><b>1ユーロ  =  {this.state.rates.JPY} 円</b></p>
         </div>
       )
     }
