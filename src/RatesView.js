@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import Button from '@material-ui/core/Button'
 
 class RatesView extends React.Component {
   constructor (props) {
@@ -67,13 +68,19 @@ class RatesView extends React.Component {
         <div>
           <h1>為替レート</h1>
           <h2>
-            {this.state.eurDate} {this.state.eurBase}-日本円
+            {this.state.eurDate} {this.state.eurBase} - 日本円
           </h2>
+          <Button variant='contained' color='primary'>
+            クリック
+          </Button>
           <p>1ユーロ = {this.state.eurRates.JPY}円</p>
           <h2>
-            {this.state.usdDate} {this.state.usdBase}-日本円
+            {this.state.usdDate} {this.state.usdBase} - 日本円
           </h2>
-          <p>1ドル = {this.state.usdRates.JPY}円</p>
+          <Button variant='contained' color='primary'>
+            クリック
+          </Button>
+          <p>1ドル = {this.state.usdRates.JPY.toFixed(1)}円</p>
         </div>
       )
     }
