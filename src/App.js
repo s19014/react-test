@@ -34,6 +34,7 @@ class MonsterView extends React.Component {
   }
 
   render () {
+    console.log(this.state.monsters.name)
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>
     } else if (!this.state.isLoaded) {
