@@ -7,21 +7,23 @@ class MonsterView extends React.Component {
     this.state = {
       isLoaded: false,
       error: null,
-      monsters: []
+      rates: [],
+      base: '',
+      date: ''
     }
   }
 
   componentDidMount () {
     window
-      .fetch(
-        'https://s3-us-west-2.amazonaws.com/blog.katsubemakito.net/static/react1st/18/data.json'
-      )
+      .fetch('https://api.exchangeratesapi.io/latest')
       .then(res => res.json())
       .then(
         result => {
           this.setState({
             isLoaded: true,
-            monsters: result.monsters
+            rates: result.rates,
+            base: result.base,
+            date: result.date
           })
         },
         error => {
@@ -34,20 +36,18 @@ class MonsterView extends React.Component {
   }
 
   render () {
-    console.log(this.state.monsters.name)
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>
     } else if (!this.state.isLoaded) {
       return <div>Loading...</div>
     } else {
       return (
-        <ul>
-          {this.state.monsters.map(monster => (
-            <li key={monster.id}>
-              {monster.name} {monster.hp}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <h1>
+            {this.state.date}の対{this.state.base}
+          </h1>
+          <p>1ユーロ = {this.state.rates.JPY} 円</p>
+        </div>
       )
     }
   }
@@ -71,11 +71,7 @@ class App extends React.Component {
   // }
 
   render () {
-    return (
-      <div>
-        <MonsterView />
-      </div>
-    )
+    return <MonsterView />
   }
 }
 export default App
