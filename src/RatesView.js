@@ -14,7 +14,10 @@ class RatesView extends React.Component {
       usdRates: [],
       usdBase: '',
       usdDate: '',
-      isModalOpen: false
+      isModalOpen: false,
+      answer: '',
+      eurJudge: false,
+      usdJudge: false
     }
   }
 
@@ -59,8 +62,12 @@ class RatesView extends React.Component {
       )
   }
 
-  handleClickLesson () {
-    this.setState({ isModalOpen: true })
+  handleClickEur () {
+    this.setState({ isModalOpen: true, eurJudge: true, usdJudge: false })
+  }
+
+  handleClickUsd () {
+    this.setState({ isModalOpen: true, usdJudge: true, eurJudge: false })
   }
 
   handleClickClose () {
@@ -69,7 +76,7 @@ class RatesView extends React.Component {
 
   clickButtonEur () {
     window.alert(
-      `ユーロ = ${Math.round(this.state.eurRates.JPY * 100) / 100}円`
+      `1ユーロ = ${Math.round(this.state.eurRates.JPY * 100) / 100}円`
     )
   }
 
@@ -78,6 +85,26 @@ class RatesView extends React.Component {
   }
 
   render () {
+    let judge
+    if (this.state.isModalOpen && this.state.eurJudge) {
+      judge = (
+        <div>
+          <h2>
+            1{this.state.eurBase} ={' '}
+            {Math.round(this.state.eurRates.JPY * 100) / 100}円
+          </h2>
+        </div>
+      )
+    } else if (this.state.isModalOpen && this.state.usdJudge) {
+      judge = (
+        <div>
+          <h2>
+            1{this.state.usdBase} ={' '}
+            {Math.round(this.state.usdRates.JPY * 100) / 100}円
+          </h2>
+        </div>
+      )
+    }
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>
     } else if (!this.state.isLoaded) {
@@ -87,35 +114,42 @@ class RatesView extends React.Component {
         <div>
           <h1>為替レート</h1>
           <div className='rate'>
-            <h2>
-              {this.state.eurDate} {this.state.eurBase} - 日本円
-            </h2>
-            <Button
-              variant='contained'
-              color='primary'
-              className='button'
-              onClick={() => {
-                this.clickButtonEur()
-              }}
-            >
-              クリック
-            </Button>
-            <p>1ユーロ = {Math.round(this.state.eurRates.JPY * 100) / 100}円</p>
-            <h2>
-              {this.state.usdDate} {this.state.usdBase} - 日本円
-            </h2>
-            <Button
-              variant='contained'
-              color='primary'
-              className='button'
-              onClick={() => {
-                this.clickButtonUsd()
-              }}
-            >
-              クリック
-            </Button>
-            <p>1ドル = {Math.round(this.state.usdRates.JPY * 100) / 100}円</p>
+            <div className='rateEur'>
+              <h2>
+                {this.state.eurDate} {this.state.eurBase} - 日本円
+              </h2>
+              <div className='button'>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className='button'
+                  onClick={() => {
+                    this.handleClickEur()
+                  }}
+                >
+                  クリック
+                </Button>
+              </div>
+            </div>
+            <div className='rateUsd'>
+              <h2>
+                {this.state.usdDate} {this.state.usdBase} - 日本円
+              </h2>
+              <div className='button'>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  className='button'
+                  onClick={() => {
+                    this.handleClickUsd()
+                  }}
+                >
+                  クリック
+                </Button>
+              </div>
+            </div>
           </div>
+          {judge}
         </div>
       )
     }
