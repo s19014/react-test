@@ -85,17 +85,20 @@ class RatesView extends React.Component {
       result = (
         <div className='result'>
           1{this.state.eurBase} ={' '}
-          {Math.round(this.state.eurRates.JPY * 100) / 100}円
+          {Math.round(this.state.eurRates.JPY * 100) / 100}
+          <span className='yen'>円</span>
         </div>
       )
     } else if (this.state.startDisplay && this.state.usdJudge) {
       result = (
         <div className='result'>
           1{this.state.usdBase} ={' '}
-          {Math.round(this.state.usdRates.JPY * 100) / 100}円
+          {Math.round(this.state.usdRates.JPY * 100) / 100}
+          <span className='yen'>円</span>
         </div>
       )
     }
+
     if (this.state.error) {
       return <div>Error: {this.state.error.message}</div>
     } else if (!this.state.isLoaded) {
