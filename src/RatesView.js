@@ -8,29 +8,30 @@ class RatesView extends React.Component {
     this.state = {
       isLoaded: false,
       error: null,
-      eurRates: [],
-      eurBase: '',
-      eurDate: '',
+      jpyRates: [],
+      jpyBase: '',
+      jpyDate: '',
       usdRates: [],
       usdBase: '',
       usdDate: '',
       startDisplay: false,
-      eurJudge: false,
-      usdJudge: false
+      jpyJudge: false,
+      usdJudge: false,
+      value: ''
     }
   }
 
   componentDidMount () {
     window
-      .fetch('https://api.exchangeratesapi.io/latest')
+      .fetch('https://api.exchangeratesapi.io/latest?base=JPY')
       .then(res => res.json())
       .then(
         result => {
           this.setState({
             isLoaded: true,
-            eurRates: result.rates,
-            eurBase: result.base,
-            eurDate: result.date
+            jpyRates: result.rates,
+            jpyBase: result.base,
+            jpyDate: result.date
           })
         },
         error => {
@@ -61,40 +62,36 @@ class RatesView extends React.Component {
       )
   }
 
-  handleClickEur () {
-    this.setState({ startDisplay: true, eurJudge: true, usdJudge: false })
+  handleClickjpy () {
+    this.setState({ startDisplay: true, jpyJudge: true, usdJudge: false })
   }
 
   handleClickUsd () {
-    this.setState({ startDisplay: true, usdJudge: true, eurJudge: false })
+    this.setState({ startDisplay: true, usdJudge: true, jpyJudge: false })
   }
 
-  // clickAlertEur () {
-  //   window.alert(
-  //     `1ユーロ = ${Math.round(this.state.eurRates.JPY * 100) / 100}円`
-  //   )
-  // }
-
-  // clickAlertUsd () {
-  //   window.alert(`1ドル = ${Math.round(this.state.usdRates.JPY * 100) / 100}円`)
-  // }
+  doChange (e) {
+    this.setState({ value: e.target.value })
+  }
 
   render () {
     let result
-    if (this.state.startDisplay && this.state.eurJudge) {
+    if (this.state.startDisplay && this.state.jpyJudge) {
       result = (
         <div className='result'>
-          1{this.state.eurBase} ={' '}
-          {Math.round(this.state.eurRates.JPY * 100) / 100}
-          <span className='yen'>円</span>
+          {this.state.value}
+          <span>円</span> ={' '}
+          {Math.round(this.state.value * this.state.jpyRates.USD * 1000) / 1000}
+          <span>ドル</span>
         </div>
       )
     } else if (this.state.startDisplay && this.state.usdJudge) {
       result = (
         <div className='result'>
-          1{this.state.usdBase} ={' '}
-          {Math.round(this.state.usdRates.JPY * 100) / 100}
-          <span className='yen'>円</span>
+          {this.state.value}
+          <span>ドル</span> ={' '}
+          {Math.round(this.state.value * this.state.usdRates.JPY * 1000) / 1000}
+          <span>円</span>
         </div>
       )
     }
@@ -108,27 +105,31 @@ class RatesView extends React.Component {
         <div>
           <h1>為替レート</h1>
           <div className='rate'>
-            <div className='rateEur'>
+            <div className='rateJpy'>
               <h2>
-                {this.state.eurDate} {this.state.eurBase} - 日本円
+                {this.state.jpyDate} - {this.state.jpyBase}を
+                {this.state.usdBase}に
               </h2>
+              <input type='number' onChange={e => this.doChange(e)} />
               <div className='button'>
                 <Button
                   variant='contained'
                   color='primary'
                   className='button'
                   onClick={() => {
-                    this.handleClickEur()
+                    this.handleClickjpy()
                   }}
                 >
-                  クリック
+                  変換
                 </Button>
               </div>
             </div>
             <div className='rateUsd'>
               <h2>
-                {this.state.usdDate} {this.state.usdBase} - 日本円
+                {this.state.usdDate} - {this.state.usdBase}を
+                {this.state.jpyBase}に
               </h2>
+              <input type='number' onChange={e => this.doChange(e)} />
               <div className='button'>
                 <Button
                   variant='contained'
@@ -138,7 +139,7 @@ class RatesView extends React.Component {
                     this.handleClickUsd()
                   }}
                 >
-                  クリック
+                  変換
                 </Button>
               </div>
             </div>

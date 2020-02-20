@@ -39,7 +39,7 @@
 
 body {
     text-align: center;
-    padding: 10px;
+    padding: 50px;
 }
 
 h1 {
@@ -50,19 +50,25 @@ h1 {
     font-size: 40px;
     margin-top: 100px;
     padding: 20px 0;
-    background-color: #f06a22;
+    background-color: #000;
+    color: #fff;
 }
 
-.rateEur {
+.rateJpy {
     margin-bottom: 50px;
 }
 
 .rateUsd {
 }
 
-.yen {
+.button {
+    margin-top: 20px;
+}
+
+input {
     font-size: 30px;
 }
+
 /*
 .button {
     margin-left: 100px;
