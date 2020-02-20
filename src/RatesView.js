@@ -14,8 +14,7 @@ class RatesView extends React.Component {
       usdRates: [],
       usdBase: '',
       usdDate: '',
-      isModalOpen: false,
-      answer: '',
+      startDisplay: false,
       eurJudge: false,
       usdJudge: false
     }
@@ -63,45 +62,37 @@ class RatesView extends React.Component {
   }
 
   handleClickEur () {
-    this.setState({ isModalOpen: true, eurJudge: true, usdJudge: false })
+    this.setState({ startDisplay: true, eurJudge: true, usdJudge: false })
   }
 
   handleClickUsd () {
-    this.setState({ isModalOpen: true, usdJudge: true, eurJudge: false })
+    this.setState({ startDisplay: true, usdJudge: true, eurJudge: false })
   }
 
-  handleClickClose () {
-    this.setState({ isModalOpen: false })
-  }
+  // clickAlertEur () {
+  //   window.alert(
+  //     `1ユーロ = ${Math.round(this.state.eurRates.JPY * 100) / 100}円`
+  //   )
+  // }
 
-  clickButtonEur () {
-    window.alert(
-      `1ユーロ = ${Math.round(this.state.eurRates.JPY * 100) / 100}円`
-    )
-  }
-
-  clickButtonUsd () {
-    window.alert(`1ドル = ${Math.round(this.state.usdRates.JPY * 100) / 100}円`)
-  }
+  // clickAlertUsd () {
+  //   window.alert(`1ドル = ${Math.round(this.state.usdRates.JPY * 100) / 100}円`)
+  // }
 
   render () {
-    let judge
-    if (this.state.isModalOpen && this.state.eurJudge) {
-      judge = (
-        <div>
-          <h2>
-            1{this.state.eurBase} ={' '}
-            {Math.round(this.state.eurRates.JPY * 100) / 100}円
-          </h2>
+    let result
+    if (this.state.startDisplay && this.state.eurJudge) {
+      result = (
+        <div className='result'>
+          1{this.state.eurBase} ={' '}
+          {Math.round(this.state.eurRates.JPY * 100) / 100}円
         </div>
       )
-    } else if (this.state.isModalOpen && this.state.usdJudge) {
-      judge = (
-        <div>
-          <h2>
-            1{this.state.usdBase} ={' '}
-            {Math.round(this.state.usdRates.JPY * 100) / 100}円
-          </h2>
+    } else if (this.state.startDisplay && this.state.usdJudge) {
+      result = (
+        <div className='result'>
+          1{this.state.usdBase} ={' '}
+          {Math.round(this.state.usdRates.JPY * 100) / 100}円
         </div>
       )
     }
@@ -149,7 +140,7 @@ class RatesView extends React.Component {
               </div>
             </div>
           </div>
-          {judge}
+          {result}
         </div>
       )
     }

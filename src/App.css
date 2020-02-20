@@ -37,15 +37,26 @@
   }
 }
 
+body {
+    text-align: center;
+}
+
 h1 {
     border-bottom: 1px solid #000;
 }
 
+.result {
+    font-size: 30px;
+    margin-top: 100px;
+    padding: 20px 0;
+    background-color: #f06a22;
+}
+/*
 .button {
     margin-left: 100px;
 } 
 
-/* 
+
 .rateEur {
     border-bottom: 1px solid #000;
 }
