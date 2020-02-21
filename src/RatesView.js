@@ -14,7 +14,7 @@ class RatesView extends React.Component {
       usdRates: [],
       usdBase: '',
       usdDate: '',
-      startDisplay: false,
+      judgeDisplay: false,
       jpyJudge: false,
       usdJudge: false,
       value: ''
@@ -63,11 +63,19 @@ class RatesView extends React.Component {
   }
 
   handleClickjpy () {
-    this.setState({ startDisplay: true, jpyJudge: true, usdJudge: false })
+    this.setState({
+      judgeDisplay: true,
+      jpyJudge: true,
+      usdJudge: false
+    })
   }
 
   handleClickUsd () {
-    this.setState({ startDisplay: true, usdJudge: true, jpyJudge: false })
+    this.setState({
+      judgeDisplay: true,
+      usdJudge: true,
+      jpyJudge: false
+    })
   }
 
   doChange (e) {
@@ -76,7 +84,7 @@ class RatesView extends React.Component {
 
   render () {
     let result
-    if (this.state.startDisplay && this.state.jpyJudge) {
+    if (this.state.judgeDisplay && this.state.jpyJudge) {
       result = (
         <div className='result'>
           {this.state.value}
@@ -85,7 +93,8 @@ class RatesView extends React.Component {
           <span>ドル</span>
         </div>
       )
-    } else if (this.state.startDisplay && this.state.usdJudge) {
+    }
+    if (this.state.judgeDisplay && this.state.usdJudge) {
       result = (
         <div className='result'>
           {this.state.value}
@@ -103,7 +112,7 @@ class RatesView extends React.Component {
     } else {
       return (
         <div>
-          <h1>為替レート</h1>
+          <h1>ドル円 計算</h1>
           <div className='rate'>
             <div className='rateJpy'>
               <h2>
@@ -120,7 +129,7 @@ class RatesView extends React.Component {
                     this.handleClickjpy()
                   }}
                 >
-                  変換
+                  計算
                 </Button>
               </div>
             </div>
@@ -139,7 +148,7 @@ class RatesView extends React.Component {
                     this.handleClickUsd()
                   }}
                 >
-                  変換
+                  計算
                 </Button>
               </div>
             </div>
