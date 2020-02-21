@@ -11,13 +11,11 @@ class RatesView extends React.Component {
       jpyRates: [],
       jpyBase: '',
       jpyDate: '',
-      usdRates: [],
-      usdBase: '',
-      usdDate: '',
       judgeDisplay: false,
       jpyJudge: false,
-      usdJudge: false,
-      value: ''
+      value: '',
+      country: '',
+      countryIndex: ''
     }
   }
 
@@ -41,40 +39,12 @@ class RatesView extends React.Component {
           })
         }
       )
-    window
-      .fetch('https://api.exchangeratesapi.io/latest?base=USD')
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            usdRates: result.rates,
-            usdBase: result.base,
-            usdDate: result.date
-          })
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error: error
-          })
-        }
-      )
   }
 
   handleClickjpy () {
     this.setState({
       judgeDisplay: true,
-      jpyJudge: true,
-      usdJudge: false
-    })
-  }
-
-  handleClickUsd () {
-    this.setState({
-      judgeDisplay: true,
-      usdJudge: true,
-      jpyJudge: false
+      jpyJudge: true
     })
   }
 
@@ -82,33 +52,39 @@ class RatesView extends React.Component {
     this.setState({ value: e.target.value })
   }
 
+  countryChange (e) {
+    this.setState({
+      country: e.target.value,
+      countryIndex: Object.keys(this.state.jpyRates).indexOf(e.target.value)
+    })
+  }
+
   render () {
+    var list = []
     const len = Object.keys(this.state.jpyRates).length
-    console.log(len)
     for (let i = 0; i < len; i++) {
-      console.log(Object.keys(this.state.jpyRates)[i])
-      console.log(Object.values(this.state.jpyRates)[i])
-      console.log('--------------------')
+      list.push(Object.keys(this.state.jpyRates)[i])
     }
+
+    const options = list.map(e => {
+      return (
+        <option key={e} value={e}>
+          {e}
+        </option>
+      )
+    })
 
     let result
     if (this.state.judgeDisplay && this.state.jpyJudge) {
       result = (
         <div className='result'>
-          {this.state.value}
-          <span>円</span> ={' '}
-          {Math.round(this.state.value * this.state.jpyRates.USD * 1000) / 1000}
-          <span>ドル</span>
-        </div>
-      )
-    }
-    if (this.state.judgeDisplay && this.state.usdJudge) {
-      result = (
-        <div className='result'>
-          {this.state.value}
-          <span>ドル</span> ={' '}
-          {Math.round(this.state.value * this.state.usdRates.JPY * 1000) / 1000}
-          <span>円</span>
+          {this.state.value}円 ={' '}
+          {Math.round(
+            this.state.value *
+              Object.values(this.state.jpyRates)[this.state.countryIndex] *
+              1000
+          ) / 1000}
+          <span className='unit'>{this.state.country}</span>
         </div>
       )
     }
@@ -120,13 +96,13 @@ class RatesView extends React.Component {
     } else {
       return (
         <div>
-          <h1>ドル円 計算</h1>
+          <h1>計算</h1>
           <div className='rate'>
             <div className='rateJpy'>
               <h2>
-                {this.state.jpyDate} - {this.state.jpyBase}を
-                {this.state.usdBase}に
+                {this.state.jpyDate} - {this.state.jpyBase}を変換
               </h2>
+              <select onChange={e => this.countryChange(e)}>{options}</select>
               <input type='number' onChange={e => this.doChange(e)} />
               <div className='button'>
                 <Button
@@ -135,25 +111,6 @@ class RatesView extends React.Component {
                   className='button'
                   onClick={() => {
                     this.handleClickjpy()
-                  }}
-                >
-                  計算
-                </Button>
-              </div>
-            </div>
-            <div className='rateUsd'>
-              <h2>
-                {this.state.usdDate} - {this.state.usdBase}を
-                {this.state.jpyBase}に
-              </h2>
-              <input type='number' onChange={e => this.doChange(e)} />
-              <div className='button'>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  className='button'
-                  onClick={() => {
-                    this.handleClickUsd()
                   }}
                 >
                   計算
