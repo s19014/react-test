@@ -8,14 +8,14 @@ class RatesView extends React.Component {
     this.state = {
       isLoaded: false,
       error: null,
-      rates: [],
-      base: '',
-      date: '',
-      resultScreen: false,
-      judge: false,
-      value: '',
-      countriy: '',
-      countryIndex: ''
+      rates: [], // ratesの中身、keyは通貨のアルファベット３文字、valueは１円と等しい額
+      base: '', // JPYが取れる、日本円
+      date: '', // いつのデータか
+      resultScreen: false, // 計算結果の表示
+      judge: false, // 何だったか忘れた 多分計算結果を画面に出力するのに必要だったかも
+      value: '', // inputに入力した値
+      countriy: '', // keyになっている通貨のアルファベット３文字
+      countryIndex: '' // keyのインデックス
     }
   }
 
@@ -41,7 +41,7 @@ class RatesView extends React.Component {
       )
   }
 
-  buttonClickjpy () {
+  buttonClickJpy () {
     this.setState({
       resultScreen: true,
       judge: true
@@ -121,7 +121,7 @@ class RatesView extends React.Component {
                   color='primary'
                   className='button'
                   onClick={() => {
-                    this.buttonClickjpy()
+                    this.buttonClickJpy()
                   }}
                 >
                   計算
