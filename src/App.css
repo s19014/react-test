@@ -69,13 +69,17 @@ select {
     font-size: 20px;
 }
 
+.preferred-currency {
+    margin-top: 30px;
+}
+
 label {
     font-size: 15px;
     margin-bottom: 1em;
 }
 
 .label {
-    margin-top: 100px;
+    margin-top: 70px;
 }
 
 input {

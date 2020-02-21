@@ -8,13 +8,13 @@ class RatesView extends React.Component {
     this.state = {
       isLoaded: false,
       error: null,
-      jpyRates: [],
-      jpyBase: '',
-      jpyDate: '',
+      rates: [],
+      base: '',
+      date: '',
       judgeDisplay: false,
-      jpyJudge: false,
+      judge: false,
       value: '',
-      country: '',
+      countriy: '',
       countryIndex: ''
     }
   }
@@ -27,9 +27,9 @@ class RatesView extends React.Component {
         result => {
           this.setState({
             isLoaded: true,
-            jpyRates: result.rates,
-            jpyBase: result.base,
-            jpyDate: result.date
+            rates: result.rates,
+            base: result.base,
+            date: result.date
           })
         },
         error => {
@@ -41,10 +41,10 @@ class RatesView extends React.Component {
       )
   }
 
-  handleClickjpy () {
+  buttonClickjpy () {
     this.setState({
       judgeDisplay: true,
-      jpyJudge: true
+      judge: true
     })
   }
 
@@ -55,15 +55,15 @@ class RatesView extends React.Component {
   countryChange (e) {
     this.setState({
       country: e.target.value,
-      countryIndex: Object.keys(this.state.jpyRates).indexOf(e.target.value)
+      countryIndex: Object.keys(this.state.rates).indexOf(e.target.value)
     })
   }
 
   render () {
     var list = []
-    const len = Object.keys(this.state.jpyRates).length
+    const len = Object.keys(this.state.rates).length
     for (let i = 0; i < len; i++) {
-      list.push(Object.keys(this.state.jpyRates)[i])
+      list.push(Object.keys(this.state.rates)[i])
     }
 
     const options = list.map(e => {
@@ -75,16 +75,16 @@ class RatesView extends React.Component {
     })
 
     let result
-    if (this.state.judgeDisplay && this.state.jpyJudge) {
+    if (this.state.judgeDisplay && this.state.judge) {
       result = (
         <div className='result'>
           {this.state.value}
           <span className='unit'>円</span> ={' '}
           {Math.round(
             this.state.value *
-              Object.values(this.state.jpyRates)[this.state.countryIndex] *
-              1000
-          ) / 1000}
+              Object.values(this.state.rates)[this.state.countryIndex] *
+              100
+          ) / 100}
           <span className='unit'>{this.state.country}</span>
         </div>
       )
@@ -101,9 +101,11 @@ class RatesView extends React.Component {
           <div className='rate'>
             <div className='rateJpy'>
               <h2>
-                {this.state.jpyDate} {this.state.jpyBase}を他の通貨に換算
+                {this.state.date} {this.state.base}を他の通貨に換算
               </h2>
-              <select onChange={e => this.countryChange(e)}>{options} </select>
+              <p className='preferred-currency'>希望通貨</p>
+              <br />
+              <select onChange={e => this.countryChange(e)}>{options}</select>
               <br />
               <div className='label'>
                 <label>
@@ -119,7 +121,7 @@ class RatesView extends React.Component {
                   color='primary'
                   className='button'
                   onClick={() => {
-                    this.handleClickjpy()
+                    this.buttonClickjpy()
                   }}
                 >
                   計算
