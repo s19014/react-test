@@ -83,6 +83,14 @@ class RatesView extends React.Component {
   }
 
   render () {
+    const len = Object.keys(this.state.jpyRates).length
+    console.log(len)
+    for (let i = 0; i < len; i++) {
+      console.log(Object.keys(this.state.jpyRates)[i])
+      console.log(Object.values(this.state.jpyRates)[i])
+      console.log('--------------------')
+    }
+
     let result
     if (this.state.judgeDisplay && this.state.jpyJudge) {
       result = (
