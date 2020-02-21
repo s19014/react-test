@@ -11,7 +11,7 @@ class RatesView extends React.Component {
       rates: [],
       base: '',
       date: '',
-      judgeDisplay: false,
+      resultScreen: false,
       judge: false,
       value: '',
       countriy: '',
@@ -43,7 +43,7 @@ class RatesView extends React.Component {
 
   buttonClickjpy () {
     this.setState({
-      judgeDisplay: true,
+      resultScreen: true,
       judge: true
     })
   }
@@ -75,7 +75,7 @@ class RatesView extends React.Component {
     })
 
     let result
-    if (this.state.judgeDisplay && this.state.judge) {
+    if (this.state.resultScreen && this.state.judge) {
       result = (
         <div className='result'>
           {this.state.value}
@@ -97,7 +97,7 @@ class RatesView extends React.Component {
     } else {
       return (
         <div>
-          <h1>計算</h1>
+          <h1>外国為替 計算</h1>
           <div className='rate'>
             <div className='rateJpy'>
               <h2>
