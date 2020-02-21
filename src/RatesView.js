@@ -78,7 +78,8 @@ class RatesView extends React.Component {
     if (this.state.judgeDisplay && this.state.jpyJudge) {
       result = (
         <div className='result'>
-          {this.state.value}円 ={' '}
+          {this.state.value}
+          <span className='unit'>円</span> ={' '}
           {Math.round(
             this.state.value *
               Object.values(this.state.jpyRates)[this.state.countryIndex] *
@@ -100,10 +101,18 @@ class RatesView extends React.Component {
           <div className='rate'>
             <div className='rateJpy'>
               <h2>
-                {this.state.jpyDate} - {this.state.jpyBase}を変換
+                {this.state.jpyDate} {this.state.jpyBase}を他の通貨に換算
               </h2>
-              <select onChange={e => this.countryChange(e)}>{options}</select>
-              <input type='number' onChange={e => this.doChange(e)} />
+              <select onChange={e => this.countryChange(e)}>{options} </select>
+              <br />
+              <div className='label'>
+                <label>
+                  {' '}
+                  数値を入力(日本円)
+                  <br />
+                  <input type='number' onChange={e => this.doChange(e)} />
+                </label>
+              </div>
               <div className='button'>
                 <Button
                   variant='contained'
