@@ -105,7 +105,10 @@ class RatesView extends React.Component {
               </h2>
               <p className='preferred-currency'>希望通貨</p>
               <br />
-              <select onChange={e => this.countryChange(e)}>{options}</select>
+              <select onChange={e => this.countryChange(e)}>
+                <option value=''>-----</option>
+                {options}
+              </select>
               <br />
               <div className='label'>
                 <label>
