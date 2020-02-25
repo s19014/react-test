@@ -42,7 +42,7 @@ class RatesView extends React.Component {
       )
   }
 
-  buttonClickJpy (e) {
+  buttonClickJpy () {
     this.setState({
       resultScreen: true,
       judge: true,
