@@ -82,6 +82,8 @@ class RatesView extends React.Component {
     if (this.state.resultScreen && this.state.judge && this.state.resultErase) {
       if (this.state.value < 0) {
         result = <div className='error'>正しく入力してください</div>
+      } else if (this.state.countryIndex === '') {
+        result = <div className='error'>正しく入力してください</div>
       } else {
         result = (
           <div className='result'>
