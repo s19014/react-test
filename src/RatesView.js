@@ -15,7 +15,8 @@ class RatesView extends React.Component {
       judge: false, // 何だったか忘れた 多分計算結果を画面に出力するのに必要だったかも
       value: '', // inputに入力した値
       countriy: '', // keyになっている通貨のアルファベット３文字
-      countryIndex: '' // keyのインデックス
+      countryIndex: '', // keyのインデックス
+      resultErase: false // 希望通貨を選ぶと計算結果を消したいときに使う
     }
   }
 
@@ -41,21 +42,24 @@ class RatesView extends React.Component {
       )
   }
 
-  buttonClickJpy () {
+  buttonClickJpy (e) {
     this.setState({
       resultScreen: true,
-      judge: true
+      judge: true,
+      resultErase: true
     })
+    this.refs.newText.value = ''
   }
 
   doChange (e) {
-    this.setState({ value: e.target.value })
+    this.setState({ value: e.target.value, resultErase: false })
   }
 
   countryChange (e) {
     this.setState({
       country: e.target.value,
-      countryIndex: Object.keys(this.state.rates).indexOf(e.target.value)
+      countryIndex: Object.keys(this.state.rates).indexOf(e.target.value),
+      resultErase: false
     })
   }
 
@@ -75,7 +79,7 @@ class RatesView extends React.Component {
     })
 
     let result
-    if (this.state.resultScreen && this.state.judge) {
+    if (this.state.resultScreen && this.state.judge && this.state.resultErase) {
       result = (
         <div className='result'>
           {this.state.value}
@@ -115,7 +119,11 @@ class RatesView extends React.Component {
                   {' '}
                   数値を入力(日本円)
                   <br />
-                  <input type='number' onChange={e => this.doChange(e)} />
+                  <input
+                    type='number'
+                    ref='newText'
+                    onChange={e => this.doChange(e)}
+                  />
                 </label>
               </div>
               <div className='button'>
