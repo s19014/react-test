@@ -113,7 +113,7 @@ class RatesView extends React.Component {
               <h2>
                 {this.state.date} {this.state.base}を他の通貨に換算
               </h2>
-              <p className='preferred-currency'>希望通貨</p>
+              <p className='preferred-currency'>希望通貨a</p>
               <br />
               <select onChange={(e) => this.countryChange(e)}>
                 <option value=''>-----</option>
