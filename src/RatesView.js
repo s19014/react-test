@@ -42,7 +42,7 @@ class RatesView extends React.Component {
       )
   }
 
-  buttonClickJpy (e) {
+  buttonClickJpy () {
     this.setState({
       resultScreen: true,
       judge: true,
@@ -115,7 +115,7 @@ class RatesView extends React.Component {
               </h2>
               <p className='preferred-currency'>希望通貨</p>
               <br />
-              <select onChange={e => this.countryChange(e)}>
+              <select onChange={(e) => this.countryChange(e)}>
                 <option value=''>-----</option>
                 {options}
               </select>
