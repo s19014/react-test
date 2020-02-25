@@ -80,18 +80,22 @@ class RatesView extends React.Component {
 
     let result
     if (this.state.resultScreen && this.state.judge && this.state.resultErase) {
-      result = (
-        <div className='result'>
-          {this.state.value}
-          <span className='unit'>円</span> ={' '}
-          {Math.round(
-            this.state.value *
-              Object.values(this.state.rates)[this.state.countryIndex] *
-              100
-          ) / 100}
-          <span className='unit'>{this.state.country}</span>
-        </div>
-      )
+      if (this.state.value < 0) {
+        result = <div className='error'>正しく入力してください</div>
+      } else {
+        result = (
+          <div className='result'>
+            {this.state.value}
+            <span className='unit'>円</span> ={' '}
+            {Math.round(
+              this.state.value *
+                Object.values(this.state.rates)[this.state.countryIndex] *
+                100
+            ) / 100}
+            <span className='unit'>{this.state.country}</span>
+          </div>
+        )
+      }
     }
 
     if (this.state.error) {
